@@ -29,7 +29,7 @@ pipeline {
                     // Запускаем тесты внутри контейнера
                     docker.image(DOCKER_IMAGE).inside {
                         // Выполняем команду тестирования
-                        sh 'sudo docker run --rm <image_name> pytest api_tests/ --url=$OPENCART_URL'  // Заменить image_name
+                        sh 'sudo docker run --rm <image_name> pytest tests/api_tests/ --url=$OPENCART_URL'  // Заменить image_name
                     }
                 }
             }
