@@ -12,7 +12,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    sh 'pytest tests/api_tests/ --url=$OPENCART_URL')
+                    sh 'pytest tests/api_tests/ --url=$OPENCART_URL'
                 }
             }
         }
