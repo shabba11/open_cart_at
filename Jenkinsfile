@@ -9,35 +9,13 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Собираем Docker image
-                    sh 'docker build -t opencart_tests .'  // Замените на желаемое имя образа
-                }
-            }
-        }
-
         stage('Run Container') {
             steps {
                 script {
-                    // Запускаем контейнер из только что созданного образа
-                    app.run('-d --name open_cart_at sudo docker run --rm opencart_tests pytest tests/api_tests/ --url=$OPENCART_URL')
+                    sh 'pytest tests/api_tests/ --url=$OPENCART_URL')
                 }
             }
         }
-
-        stage('Cleanup') {
-            steps {
-                script {
-                    // Останавливаем и удаляем контейнер
-                    sh 'docker stop my-running-container || true'
-                    sh 'docker rm my-running-container || true'
-                    sh "docker rmi my-docker-image:${env.BUILD_ID} || true"  // Удаляем образ, если это необходимо
-                }
-            }
-        }
-    }
 
     post {
         always {
