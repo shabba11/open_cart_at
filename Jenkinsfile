@@ -1,50 +1,54 @@
 pipeline {
-    agent any
-
-    environment {
-        // Название вашего Docker-образа
-        DOCKER_IMAGE = '<name>:latest'  // Замените на ваше имя образа
-    }
+    agent any  // Использует любой доступный агент
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                // Получаем код из вашего репозитория
-                git url: 'https://github.com/shabba11/open_cart_at.git', branch: 'project_open_cart_at' // Заменить ссылка на репозиторий
+                // Клонируем репозиторий содержимое
+                git url: 'https://github.com/shabba11/open_cart_at.git', branch: 'project_open_cart_at' // Замените на ваш репозиторий
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Собираем Docker-образ из Dockerfile
-                    docker.build(DOCKER_IMAGE)
+                    // Собираем Docker image
+                    def app = docker.build("open_cart_at:${env.BUILD_ID}")  // Замените на желаемое имя образа
                 }
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Container') {
             steps {
                 script {
-                    // Запускаем тесты внутри контейнера
-                    docker.image(DOCKER_IMAGE).inside {
-                        // Выполняем команду тестирования
-                        sh 'sudo docker run --rm opencart_tests pytest tests/api_tests/ --url=$OPENCART_URL'  // Заменить image_name
-                    }
+                    // Запускаем контейнер из только что созданного образа
+                    // Замените 'your-command' на команду, которую необходимо выполнить внутри контейнера
+                    app.run('-d --name open_cart_at sudo docker run --rm opencart_tests pytest tests/api_tests/ --url=$OPENCART_URL')
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                script {
+                    // Останавливаем и удаляем контейнер
+                    sh 'docker stop my-running-container || true'
+                    sh 'docker rm my-running-container || true'
+                    sh "docker rmi my-docker-image:${env.BUILD_ID} || true"  // Удаляем образ, если это необходимо
                 }
             }
         }
     }
-    
+
     post {
         always {
-            cleanWs()
+            echo 'Pipeline завершён.'
         }
         success {
-            echo 'Tests completed successfully!'
+            echo 'Тесты пройдены успешно!'
         }
         failure {
-            echo 'Tests failed!'
+            echo 'Сборка завершилась ошибкой.'
         }
     }
 }
