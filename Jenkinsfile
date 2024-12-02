@@ -12,9 +12,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Собираем Docker image
-                    def app = docker.build("open_cart_at:${env.BUILD_ID}")  // Замените на желаемое имя образа
-                }
+                       // Здесь Docker должен быть доступен
+                       sh 'docker build -t open_cart_at .'
+                  }
             }
         }
 
