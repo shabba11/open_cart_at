@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Собираем Docker image
-                    def app = docker.build("open_cart_at")  // Замените на желаемое имя образа
+                    sh 'docker build -t opencart_tests .'  // Замените на желаемое имя образа
                 }
             }
         }
