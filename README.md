@@ -21,5 +21,5 @@ docker compose up -d
 4. Для запуска UI тестов выполнить команду sudo docker run --rm <image_name> pytest tests/ui_tests/ -n $THREADS --executor=$EXECUTOR_ADDRESS --url=$OPENCART_URL --browser=$BROWSER --bv=$BROWSER_VERSION
 
 Запуск тестов с помощью Jenkins возможен с помощью Jenkinsfile (комментариями помечено что нужно поменять в самом файле)
-- Jenkins можно запустить в контейнере с помощью jenkins/docker-compose.yml -> docker-compose up -d
-Далее нужно создать pipeline и указать Jenkinsfile из этого репозитория. 
+- Jenkins можно запустить в контейнере с помощью jenkins/docker-compose.yml -> docker-compose up -d. 
+- Далее нужно создать pipeline и указать Jenkinsfile из этого репозитория. 
