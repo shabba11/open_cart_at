@@ -22,7 +22,6 @@ pipeline {
             steps {
                 script {
                     // Запускаем контейнер из только что созданного образа
-                    // Замените 'your-command' на команду, которую необходимо выполнить внутри контейнера
                     app.run('-d --name open_cart_at sudo docker run --rm opencart_tests pytest tests/api_tests/ --url=$OPENCART_URL')
                 }
             }
