@@ -22,3 +22,4 @@ docker compose up -d
 
 Запуск тестов с помощью Jenkins возможен с помощью Jenkinsfile (комментариями помечено что нужно поменять в самом файле)
 - Jenkins можно запустить в контейнере с помощью jenkins/docker-compose.yml -> docker-compose up -d
+Далее нужно создать pipeline и указать Jenkinsfile из этого репозитория. 
