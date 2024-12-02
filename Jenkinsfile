@@ -1,31 +1,35 @@
 pipeline {
-    agent any  // Использует любой доступный агент
+    agent any
 
     stages {
         stage('Clone Repository') {
             steps {
-                // Клонируем репозиторий содержимое
-                git url: 'https://github.com/shabba11/open_cart_at.git', branch: 'project_open_cart_at' // Замените на ваш репозиторий
+                // Клонируем репозиторий
+                git url: 'https://github.com/shabba11/open_cart_at.git', branch: 'project_open_cart_at'
             }
         }
 
-        stage('Run Container') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    sh 'pytest tests/api_tests/ --url=$OPENCART_URL'
-                }
+                // Установка зависимостей
+                sh 'pip install -r requirements.txt'
             }
         }
 
-    post {
-        always {
-            echo 'Pipeline завершён.'
-        }
-        success {
-            echo 'Тесты пройдены успешно!'
-        }
-        failure {
-            echo 'Сборка завершилась ошибкой.'
+        stage('Run Tests') {
+            steps {
+                // Запуск тестов с pytest
+                sh 'pytest tests/api_tests/'
+            }
         }
     }
-}
+
+    post {
+        }
+        success {
+            echo 'Тесты успешно пройдены!'
+        }
+        failure {
+            echo 'Тесты не пройдены!'
+        }
+    }
