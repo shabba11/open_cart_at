@@ -5,11 +5,13 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins
     ports:
-      - "8085:8080"
+      - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - ./jenkins-config.yaml:/var/jenkins_home/jenkins.yaml
+      - /var/run/docker.sock:/var/run/docker.sock  # подключение сокета Docker
+    environment:
+      JENKINS_OPTS: --argumentsRealm.passwd.admin=admin --argumentsRealm.roles.admin=admin
     restart: unless-stopped
 
 volumes:
