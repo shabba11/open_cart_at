@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Получаем код из вашего репозитория
-                git url: 'https://github.com/your/repo.git', branch: 'main' // Заменить ссылка на репозиторий
+                git url: 'https://github.com/shabba11/open_cart_at.git', branch: 'project_open_cart_at' // Заменить ссылка на репозиторий
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
                     // Запускаем тесты внутри контейнера
                     docker.image(DOCKER_IMAGE).inside {
                         // Выполняем команду тестирования
-                        sh 'sudo docker run --rm <image_name> pytest tests/api_tests/ --url=$OPENCART_URL'  // Заменить image_name
+                        sh 'sudo docker run --rm opencart_tests pytest tests/api_tests/ --url=$OPENCART_URL'  // Заменить image_name
                     }
                 }
             }
