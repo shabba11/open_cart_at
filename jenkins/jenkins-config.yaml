@@ -1,0 +1,19 @@
+jenkins:
+  systemMessage: "Jenkins настроен с помощью JCasC и доступен без авторизации"
+  numExecutors: 2
+  securityRealm:
+    unsecure: {}  # Отключаем безопасность
+  useSecurity: false  # Отключаем общий доступ
+  tools:
+    jdk:
+      installations:
+        - name: "OpenJDK 11"
+          home: "/usr/lib/jvm/java-11-openjdk-amd64"
+    git:
+      installations:
+        - name: "Default"
+          home: "/usr/bin/git"
+  plugins:
+    required:
+      - git:4.10.0
+      - workflow-aggregator:2.6
