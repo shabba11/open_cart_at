@@ -22,7 +22,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Запуск тестов с pytest
-                sh 'pytest tests/api_tests/'
+                sh 'python3 -m pytest tests/api_tests/'
             }
         }
     }
