@@ -12,7 +12,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Установка зависимостей
-                sh 'python pip install -r requirements.txt'
+                sh 'pip install -r requirements.txt'
             }
         }
 
